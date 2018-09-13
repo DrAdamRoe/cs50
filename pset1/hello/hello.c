@@ -1,4 +1,4 @@
-//this is the hello world for cs50
+//this is the hello world for cs50.
 
 #include <stdio.h>
 
