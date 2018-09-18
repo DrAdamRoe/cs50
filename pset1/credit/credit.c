@@ -39,7 +39,6 @@ int main(void){
             // debug: printf("i:%i, c:%c, int: %i, i2: %i \n",i,c_dig,c_dig-'0',i2_dig);
 
             // get digits, clean solution: https://stackoverflow.com/questions/3118490/getting-each-individual-digit-from-a-whole-integer
-
             int single_dig = 0;
             while (i2_dig){
                 single_dig =  i2_dig % 10;
@@ -71,7 +70,6 @@ const char* lli_to_string(long long n, char* s){
     return s;
 }
 
-
 //ugly code to find the card company.
 void printCompany(char* s){
 
@@ -82,36 +80,38 @@ void printCompany(char* s){
 
     //length of credit card string
     int length = strlen(s);
-    printf("length: %i\n", length);
+    //debug: printf("length: %i\n", length);
 
     switch (first){
 
         //Visa, easy.
         case '4':
             if (length == 13 || length == 16){
-                printf("Visa\n");
+                printf("VISA\n");
+            }else{
+                printf("INVALID\n");
             }
         break;
 
         //AmEx
         case '3':
-            if ( second=='4' || second == '7'){
-                 if (length == 15){
-                    printf("AMEX\n");
-                 }
+            if (( second=='4' || second == '7') && length == 15){
+                printf("AMEX\n");
+            }else{
+                printf("INVALID\n");
             }
             break;
 
         //MasterCard
         case '5':
-            if (length == 16){
-                for (int i=1; i<6;i++){
-                    if ( i_second == i){
-                        printf("MASTERCARD\n");
-                        break;
-                    }
-                }
+            if (length == 16 && i_second > 0 && i_second < 6){
+                printf("MASTERCARD\n");
+            }else{
+                printf("INVALID\n");
             }
+
+            break;
+
         default:
          printf("INVALID\n");
         }
