@@ -7,39 +7,50 @@
 #include <locale.h>
 
 
-//Forward declare our very advanced cypher
+//Forward declare input check helpers
+int check_inputs(int argc, char *argv[]);
 int verify_key(string key);
 
+//Forward declare our very advanced cypher
 string cipher(string plaintext, string key);
 int get_offset(char k);
 
 int main(int argc, char *argv[])
 {
 
-    // check for inputs as per specs
+    if (check_inputs(argc, argv)){
+        return 1;
+    }
+
+    //make sure we are dealing in UTF-8, neccesarry for using ctype library.
+    setlocale(LC_ALL, "");
+
+    // get message from user
+    string plaintext = get_string("plaintext: ");
+
+    //function to encrypt plaintext, passing in the key as an argument.
+    printf("ciphertext: %s\n", cipher(plaintext,argv[1]));
+
+    return 0;
+}
+
+
+//check that there is exactly 1 argument, which is alphabetical.
+int check_inputs(int argc, char *argv[]){
+ // check for inputs as per specs
     if (argc != 2)
     {
         printf("expected 1 argument, you passed %i. Exiting \n", argc);
         return 1;
     }
 
-    string key = argv[1];
-
-    //make sure we are dealing in UTF-8, neccesarry for using ctype library.
-    setlocale(LC_ALL, "");
-
-    //check if input is purely aplhapbetical. If not, exit with error code 1.
-    if ( verify_key(key) == 1) {
-        printf("key should only contain alphabetical characters. Key used: %s . Exiting \n", key);
+     //check if input is purely aplhapbetical. If not, exit with error code 1.
+    if ( verify_key(argv[1]) == 1) {
+        printf("key should only contain alphabetical characters. Key used: %s . Exiting \n", argv[1]);
         return 1;
     }
 
-    // get message from user
-    string plaintext = get_string("plaintext: ");
-
-    //function to encrypt plaintext
-    printf("ciphertext: %s\n", cipher(plaintext,key));
-
+    //no formal error
     return 0;
 }
 
