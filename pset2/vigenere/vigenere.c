@@ -59,24 +59,21 @@ int verify_key(string key){
 }
 
 string cipher(string plaintext, string key){
-    //define ciphertext to be returned. initialize to 0.
-    char *ciphertext = plaintext;
-    //memset(ciphertext, '\0',sizeof(ciphertext));
-    //strcpy(ciphertext, plaintext);
-    printf("plain: %s, cipher: %s \n", plaintext, ciphertext);
+
     //index of key character to be used for encryption.
     int k = 0;
+
     //store length of key
     int keylength = strlen(key);
 
     //loop over letters in the text
-    int plaintext_length = strlen(plaintext);
+    int text_length = strlen(plaintext);
 
-    for (int c=0; c < plaintext_length; c++){
+    //loop over characters in plaintext
+    for (int c=0; c <text_length; c++){
 
         //if plain character is non-alphabetical, continue.
         if (!isalpha(plaintext[c])){
-            //ciphertext[c] = plaintext[c];
             continue;
         }
 
@@ -90,24 +87,26 @@ string cipher(string plaintext, string key){
         if (k == keylength){
             k=0;
         }
+
+        int candidate_value = plaintext[c] + offset;
         //transform, preserving case.
         if isupper(plaintext[c]){
-            if isupper(ciphertext[c]+offset){
-                ciphertext[c] = plaintext[c] + offset;
+            if isupper(candidate_value){
+                plaintext[c] = candidate_value;
             }else{
-                ciphertext[c] = plaintext[c] + offset - 26;
+                plaintext[c] = candidate_value - 26;
             }
         }else{
-            if islower(ciphertext[c]+offset){
-                    ciphertext[c] = plaintext[c] + offset;
+            if islower(candidate_value){
+                    plaintext[c] = candidate_value;
             }else{
-                ciphertext[c] = plaintext[c] + offset - 26;
+                plaintext[c] = candidate_value - 26;
             }
         }
 
     }
 
-    return ciphertext;
+    return plaintext;
 }
 
 int get_offset(char k){
