@@ -43,6 +43,7 @@ string crack(string hash){
     // -- hack --
     // create a random password (alphabetical, max 5 digits). Total of about 400k possibilities.
 
+/*
     //fill an array with all chars which are useable for the password
     const int n_chars = 53;
 
@@ -57,8 +58,14 @@ string crack(string hash){
         }
     }
     //add a null terminator as the last possible character
+*/
 
-
+    const int n_chars = 5;
+    char legit_chars[n_chars];
+    legit_chars[0] = 'h';
+    legit_chars[1] = 'e';
+    legit_chars[2] = 'l';
+    legit_chars[3] = 'o';
     legit_chars[n_chars-1] = '\0';
 
     printf("array: %s ", legit_chars);
@@ -66,23 +73,22 @@ string crack(string hash){
     string candidate; // hashed, generated password. will be overwritten constantly
     char password[6] = {'\0'};
 
-
     //password = "hello";
 
     for (int i = 0; i < n_chars; ++i){
-        password[0] = i;
+        password[0] = legit_chars[i];
 
         for (int j = 0; j < n_chars; ++j){
-            password[1] = j;
+            password[1] = legit_chars[j];
 
             for (int k = 0; k < n_chars; ++k){
-                password[2] = k;
+                password[2] = legit_chars[k];
 
                 for (int l = 0; l < n_chars; ++l){
-                    password[3] = l;
+                    password[3] = legit_chars[l];
 
                     for (int m = 0; m < n_chars; ++m){
-                        password[4] = m;
+                        password[4] = legit_chars[m];
 
                         //encrypt
                         candidate = crypt(password,salt);
